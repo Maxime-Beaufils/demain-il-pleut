@@ -24,9 +24,11 @@ export default new Vuex.Store({
     }
   },
   actions : {
-    getCoordonate : async (context, place) => { // place = adresse recherchée de l'utilisateur via search imput
-      context;
-      place;
+    getCoordonate : async (context, place) => { // place = adresse recherchée par l'utilisateur via search imput
+      let formatPlace = place.replace(/\s+/g, '-').toLowerCase();
+      let response = await Axios.get('https://geocode.xyz/' + formatPlace + '?geoit=JSON');
+      let coor = [response.data.latt, response.data.longt];
+      context.commit('setCoordonate', coor);
     },
 
     getWeatherData :  async (context) => {
