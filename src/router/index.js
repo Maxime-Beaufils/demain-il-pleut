@@ -1,20 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+import Minute from '@/components/minute.vue';
+import Heure from '@/components/heure.vue';
+import Jour from '@/components/jour.vue';
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'minute',
+    component: Minute
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/heure',
+    name: 'heure',
+    component: Heure
+  },
+  {
+    path: '/jour',
+    name: 'jour',
+    component: Jour
+  },
 ]
 
 const router = new VueRouter({

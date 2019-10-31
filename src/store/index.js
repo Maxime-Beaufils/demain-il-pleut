@@ -24,7 +24,7 @@ export default new Vuex.Store({
     }
   },
   actions : {
-    getCoordonate : async (context, place) => { // place = adresse recherchée par l'utilisateur via search imput
+    getCoordonate : async (context, place) => { // place = adresse recherchée par l'utilisateur via  input
       let formatPlace = place.replace(/\s+/g, '-').toLowerCase();
       let response = await Axios.get('https://geocode.xyz/' + formatPlace + '?geoit=JSON');
       let coor = [response.data.latt, response.data.longt];
@@ -34,7 +34,7 @@ export default new Vuex.Store({
     getWeatherData :  async (context) => {
       let data = await Axios.get('https://cors-anywhere.herokuapp.com/' +
                                  context.state.dark_api_url + '/' +
-                               `${process.env.VUE_APP_SKY}` + '/' +
+                                    process.env.VUE_APP_SKY + '/' +
                                 context.state.coordonate[0] + ',' +
                                 context.state.coordonate[1] + 
                                 '?lang=fr' +
