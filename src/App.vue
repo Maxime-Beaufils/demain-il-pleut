@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-button type="is-info" @click="getWeatherData">Get weather</b-button>
-    <p>This component’s code is in {{ weather_data }}</p>
+    <p>This component’s code is in {{ weather_data.data.currently }}</p>
   </div>
 </template>
 
@@ -11,7 +11,6 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      
     }
   },
   methods: {

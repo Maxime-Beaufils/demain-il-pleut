@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     weather_data: {ciel : "pluie"},
-    coordonate: [0.370679, 49.182863],
+    coordonate: [49.182863, 0.370679],
     dark_api_url: "https://api.darksky.net/forecast"
   },
   getters : {
@@ -24,12 +24,19 @@ export default new Vuex.Store({
     }
   },
   actions : {
-    getCoordonate : async (context) => {
-      context
+    getCoordonate : async (context, place) => { // place = adresse recherchée de l'utilisateur via search imput
+      context;
+      place;
     },
 
     getWeatherData :  async (context) => {
-      let data = await Axios.get(context.state.dark_api_url + '/' + `${process.env.VUE_APP_SKY}` + '/' + context.state.coordonate[0] + '/' + context.state.coordonate[1])
+      let data = await Axios.get('https://cors-anywhere.herokuapp.com/' +
+                                 context.state.dark_api_url + '/' +
+                               `${process.env.VUE_APP_SKY}` + '/' +
+                                context.state.coordonate[0] + ',' +
+                                context.state.coordonate[1] + 
+                                '?lang=fr' +
+                                '&units=si')
       context.commit('setWeatherData', data)
     }
   },
