@@ -1,5 +1,6 @@
 <template>
-  <div>{{ weather_data.hourly }}</div>
+  <div><p>minute</p>{{ weather_data.data.minutely }}</div>
+  
 </template>
 
 <script>
