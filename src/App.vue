@@ -93,7 +93,7 @@ a p {
 }
 .left_panel {
   background-color: white;
-  height: 100vh;
+  
 }
 .right_panel {
   background-color: rgb(238, 238, 238);
@@ -119,6 +119,10 @@ a p {
   background-color: white !important;
   color:hsl(217, 71%, 53%) !important;
   box-shadow: 2px 2px 5px rgb(109, 109, 109) !important;
+}
+.columns {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 @media screen and (max-width: 420px)
 {

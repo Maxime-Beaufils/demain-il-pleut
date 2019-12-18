@@ -21,21 +21,77 @@
           <div class="columns">
             <div class="column summary">
               <p class="is-size-4 has-text-centered has-text-weight-bold">
-                <i class="fas fa-cloud"></i> &nbsp; <br />
+                
                 {{ weather_data.data.currently.summary }}
               </p>
             </div>
             <div class="column summary-temp">
               <p class="is-size-3 has-text-centered has-text-weight-bold">
-                {{ weather_data.data.currently.temperature }} °C
-              </p> 
+                <i class="fas fa-thermometer-half"></i> &nbsp;{{ weather_data.data.currently.temperature }} °C
+              </p>
               <p class="is-size-6 has-text-centered">
-                ressentie: &nbsp;
+                ressentie: &nbsp;&nbsp; 
                 {{ weather_data.data.currently.apparentTemperature }} °C
               </p>
             </div>
           </div>
-          <table class="table pression">
+          <table class="table is-bordered pression">
+            <thead>
+              <tr>
+                <th>Précipitation</th>
+                <th>Probabilité de précipitation</th>
+                <th>Couverture nuageuse</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>{{ weather_data.data.currently.precipIntensity }} mm</th>
+                <th>
+                  {{
+                    weather_data.data.currently.precipProbability * 100
+                  }}&nbsp;%
+                </th>
+                <th>
+                  {{ weather_data.data.currently.cloudCover * 100 }}&nbsp; %
+                </th>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table is-bordered pression">
+            <thead>
+              <tr>
+                <th>Vitesse du vent</th>
+                <th>Rafale</th>
+                <th>direction du vent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>{{ weather_data.data.currently.windSpeed }} km/h</th>
+                <th>{{ weather_data.data.currently.windGust }} km/h</th>
+                <th>
+                  {{ windDirection(weather_data.data.currently.windBearing) }}
+                </th>
+              </tr>
+            </tbody>
+          </table>
+          <table v-if="weather_data.data.currently.nearestStormDistance" class="table is-bordered pression">
+            <thead>
+              <tr>
+                <th>Distance de la tempête <br> la plus proche </th>
+                <th>Direction de la tempête</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>{{ weather_data.data.currently.nearestStormDistance }} km</th>
+                <th>
+                  {{ windDirection(weather_data.data.currently.nearestStormBearing) }}
+                </th>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table is-bordered pression">
             <thead>
               <tr>
                 <th>Humidité</th>
@@ -48,6 +104,22 @@
                 <th>{{ weather_data.data.currently.humidity * 100 }}&nbsp;%</th>
                 <th>{{ weather_data.data.currently.pressure }}</th>
                 <th>{{ weather_data.data.currently.dewPoint }}&nbsp; °C</th>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table is-bordered pression">
+            <thead>
+              <tr>
+                <th>Indice UV</th>
+                <th>Visibilité</th>
+                <th>Ozone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>{{ weather_data.data.currently.uvIndex }}</th>
+                <th>{{ weather_data.data.currently.visibility }} &nbsp; km</th>
+                <th>{{ weather_data.data.currently.ozone }} &nbsp; DU</th>
               </tr>
             </tbody>
           </table>
@@ -68,6 +140,29 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters(["weather_data"])
+  },
+  methods: {
+    windDirection: degree => {
+      let direction = [
+        "N (nord)",
+        "NNE (nord-nord-est)",
+        "NE (nord-est)",
+        "ENE (est-nord-est)",
+        "E (est)",
+        "ESE (est-sud-est)",
+        "SE (sud-est)",
+        "SSE (sud-sud-est)",
+        "S (sud)",
+        "SSO (sud-sud-ouest)",
+        "SO (sud-ouest)",
+        "OSO (ouest-sud-ouest)",
+        "O (ouest)",
+        "ONO (ouest-nord-ouest)",
+        "NO (nord-ouest)",
+        "NNO (nord-nord-ouest)"
+      ];
+      return direction[Math.round(degree / 22.5)];
+    }
   }
 };
 </script>
