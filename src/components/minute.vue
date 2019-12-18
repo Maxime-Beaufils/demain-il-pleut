@@ -1,5 +1,5 @@
 <template>
-  <div><p>minute</p>{{ weather_data.data.minutely }}</div>
+  <div>minute : {{ weather_data.data.minutely }}</div>
   
 </template>
 

@@ -6,8 +6,10 @@ import './registerServiceWorker'
 
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
-
 Vue.use(Buefy)
+
+import moment from 'moment'
+Vue.prototype.moment = moment
 
 Vue.config.productionTip = false
 
