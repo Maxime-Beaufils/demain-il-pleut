@@ -1,16 +1,19 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
+import moment from "moment";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    weather_data:   { data: { currently: {}, minutely: {}, hourly: {}, daily: {} }},
-    coordonate:     [49.182863, 0.370679],
-    dark_api_url:   "https://api.darksky.net/forecast",
-    current_place:  "Caen",
-    error:          ""
+    weather_data: {
+      data: { currently: {}, minutely: {}, hourly: {}, daily: {} }
+    },
+    coordonate: [49.182863, 0.370679],
+    dark_api_url: "https://api.darksky.net/forecast",
+    current_place: "Caen",
+    error: ""
   },
   getters: {
     weather_data: state => {
@@ -18,6 +21,57 @@ export default new Vuex.Store({
     },
     current_place: state => {
       return state.current_place;
+    },
+    minutely_loading: state => {
+      return state.weather_data.data.minutely ? true : false;
+    },
+    minutely_chart_data: state => {
+      let timeLabels = [],
+        precipitation = [],
+        precipitationProbality = [];
+      const dataArr = state.weather_data.data.minutely.data;
+      if (dataArr) {
+        dataArr.forEach(el => {
+          timeLabels.push(moment.unix(el.time).format("HH:mm"));
+          precipitation.push(el.precipIntensity);
+          precipitationProbality.push(el.precipProbability);
+        });
+      }
+      let chartData = {
+        labels: timeLabels,
+        datasets: [
+          {
+            label: "Précipitation en milimétre",
+            backgroundColor: "#3273DC",
+            data: precipitation
+          }
+        ]
+      };
+
+      return chartData;
+    },
+    degreeToCardinalDirection: function() {
+      return (degree) => {
+        const direction = [
+          "N (nord)",
+          "NNE (nord-nord-est)",
+          "NE (nord-est)",
+          "ENE (est-nord-est)",
+          "E (est)",
+          "ESE (est-sud-est)",
+          "SE (sud-est)",
+          "SSE (sud-sud-est)",
+          "S (sud)",
+          "SSO (sud-sud-ouest)",
+          "SO (sud-ouest)",
+          "OSO (ouest-sud-ouest)",
+          "O (ouest)",
+          "ONO (ouest-nord-ouest)",
+          "NO (nord-ouest)",
+          "NNO (nord-nord-ouest)"
+        ];
+        return direction[Math.round(degree / 22.5)];
+      }
     }
   },
   mutations: {
@@ -37,7 +91,7 @@ export default new Vuex.Store({
   actions: {
     getCoordonate: async (context, place) => {
       let formatPlace = place.replace(/\s+/g, "-").toLowerCase();
-      context.commit('setCurrentPlace', formatPlace);
+      context.commit("setCurrentPlace", formatPlace);
       let response = await Axios.get(
         "https://geocode.xyz/" + formatPlace + "?geoit=JSON"
       );
@@ -49,7 +103,7 @@ export default new Vuex.Store({
       let data = await Axios.get(
         "https://cors-anywhere.herokuapp.com/" +
           context.state.dark_api_url +
-          "/" +
+          "/" + 
           process.env.VUE_APP_SKY +
           "/" +
           context.state.coordonate[0] +

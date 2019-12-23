@@ -9,7 +9,7 @@
         aria-controls="contentIdForA11y3"
       >
         <p class="card-header-title">
-          En ce moment
+          En ce moment à {{ moment.unix(weather_data.data.currently.time).format("HH:mm") }}
         </p>
         <a class="card-header-icon">
           <b-icon pack="fas" :icon="props.open ? 'chevron-up' : 'chevron-down'">
@@ -52,7 +52,7 @@
                   }}&nbsp;%
                 </th>
                 <th>
-                  {{ weather_data.data.currently.cloudCover * 100 }}&nbsp; %
+                  {{ (weather_data.data.currently.cloudCover * 100).toFixed(2) }}&nbsp; %
                 </th>
               </tr>
             </tbody>
@@ -70,7 +70,7 @@
                 <th>{{ weather_data.data.currently.windSpeed }} km/h</th>
                 <th>{{ weather_data.data.currently.windGust }} km/h</th>
                 <th>
-                  {{ windDirection(weather_data.data.currently.windBearing) }}
+                  {{ degreeToCardinalDirection(weather_data.data.currently.windBearing) }}
                 </th>
               </tr>
             </tbody>
@@ -86,7 +86,7 @@
               <tr>
                 <th>{{ weather_data.data.currently.nearestStormDistance }} km</th>
                 <th>
-                  {{ windDirection(weather_data.data.currently.nearestStormBearing) }}
+                  {{ degreeToCardinalDirection(weather_data.data.currently.nearestStormBearing) }}
                 </th>
               </tr>
             </tbody>
@@ -101,8 +101,8 @@
             </thead>
             <tbody>
               <tr>
-                <th>{{ weather_data.data.currently.humidity * 100 }}&nbsp;%</th>
-                <th>{{ weather_data.data.currently.pressure }}</th>
+                <th>{{ (weather_data.data.currently.humidity * 100).toFixed(2) }}&nbsp;%</th>
+                <th>{{ weather_data.data.currently.pressure }} hPa</th>
                 <th>{{ weather_data.data.currently.dewPoint }}&nbsp; °C</th>
               </tr>
             </tbody>
@@ -123,47 +123,19 @@
               </tr>
             </tbody>
           </table>
-          {{ weather_data.data.currently }}
         </div>
       </div>
-      <footer class="card-footer">
-        <p class="card-footer-item">
-          à {{ moment(weather_data.data.currently.time).format("HH:mm:ss") }}
-        </p>
-      </footer>
     </b-collapse>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["weather_data"])
+    ...mapState(["weather_data"]),
+    ...mapGetters(["degreeToCardinalDirection"])
   },
-  methods: {
-    windDirection: degree => {
-      let direction = [
-        "N (nord)",
-        "NNE (nord-nord-est)",
-        "NE (nord-est)",
-        "ENE (est-nord-est)",
-        "E (est)",
-        "ESE (est-sud-est)",
-        "SE (sud-est)",
-        "SSE (sud-sud-est)",
-        "S (sud)",
-        "SSO (sud-sud-ouest)",
-        "SO (sud-ouest)",
-        "OSO (ouest-sud-ouest)",
-        "O (ouest)",
-        "ONO (ouest-nord-ouest)",
-        "NO (nord-ouest)",
-        "NNO (nord-nord-ouest)"
-      ];
-      return direction[Math.round(degree / 22.5)];
-    }
-  }
 };
 </script>
 
@@ -204,5 +176,4 @@ export default {
 .pression tbody tr th {
   text-align: center;
   color: hsl(217, 71%, 53%);
-}</style
->>
+}</style>
