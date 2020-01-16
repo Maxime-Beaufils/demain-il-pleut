@@ -4,13 +4,16 @@
       <div class="summary">
         <h2 class="is-4">{{ weather_data.data.minutely.summary }}</h2>
       </div>
-      <line-chart class="chartGraph"
+      <line-chart
+        class="chartGraph"
         :chartData="minutely_chart_data"
         :options="this.lineOptions"
       ></line-chart>
     </div>
     <div v-else>
-      <p>les prévisions dès prochaines minutes ne sont pas disponible</p>
+      <p class="summary">
+        les prévisions dès prochaines minutes ne sont pas disponible
+      </p>
     </div>
     <!-- {{ minutely_chart_data }} -->
   </div>
@@ -25,6 +28,8 @@ export default {
   data() {
     return {
       lineOptions: {
+      responsive: true,
+      maintainAspectRatio: false,
         scales: {
           yAxes: [
             {

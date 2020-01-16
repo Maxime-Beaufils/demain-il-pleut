@@ -79,6 +79,34 @@ export default new Vuex.Store({
 
       return chartData;
     },
+    daily_weather_data: state => {
+      return state.weather_data.data.daily
+    },
+    daily_chart_data: state => {
+      let timeLabels = [],
+        precipitation = [],
+        precipitationProbality = [];
+      const dataArr = state.weather_data.data.daily.data;
+      if (dataArr) {
+        dataArr.forEach(el => {
+          timeLabels.push(moment.unix(el.time).format("DD/MM"));
+          precipitation.push(el.precipIntensity);
+          precipitationProbality.push(el.precipProbability);
+        });
+      }
+      let chartData = {
+        labels: timeLabels,
+        datasets: [
+          {
+            label: "Précipitation en milimétre",
+            backgroundColor: "#3273DC",
+            data: precipitation
+          }
+        ]
+      };
+
+      return chartData;
+    },
     degreeToCardinalDirection: function() {
       return (degree) => {
         const direction = [
