@@ -62,6 +62,7 @@ export default {
     width: 70%;
   }
 }
+
 .chartGraph {
   background-color: white;
   box-shadow: 1px 1px 8px rgb(233, 233, 233);

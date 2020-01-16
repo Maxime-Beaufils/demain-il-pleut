@@ -10,7 +10,7 @@ export default new Vuex.Store({
     weather_data: {
       data: { currently: {}, minutely: {}, hourly: {}, daily: {} }
     },
-    coordonate: [49.182863, 0.370679],
+    coordonate: [49.182863, -0.35],
     dark_api_url: "https://api.darksky.net/forecast",
     current_place: "Caen",
     error: ""
@@ -30,6 +30,35 @@ export default new Vuex.Store({
         precipitation = [],
         precipitationProbality = [];
       const dataArr = state.weather_data.data.minutely.data;
+      if (dataArr) {
+        dataArr.forEach(el => {
+          timeLabels.push(moment.unix(el.time).format("HH:mm"));
+          precipitation.push(el.precipIntensity);
+          precipitationProbality.push(el.precipProbability);
+        });
+      }
+      let chartData = {
+        labels: timeLabels,
+        datasets: [
+          {
+            label: "Précipitation en milimétre",
+            backgroundColor: "#3273DC",
+            data: precipitation
+          }
+        ]
+      };
+
+      return chartData;
+    },
+    hourly_weather_data: state => {
+      return state.weather_data.data.hourly
+    },
+
+    hourly_chart_data: state => {
+      let timeLabels = [],
+        precipitation = [],
+        precipitationProbality = [];
+      const dataArr = state.weather_data.data.hourly.data;
       if (dataArr) {
         dataArr.forEach(el => {
           timeLabels.push(moment.unix(el.time).format("HH:mm"));

@@ -43,7 +43,7 @@
         <nav class="columns is-mobile nav">
           <div class="column has-text-centered">
             <b-button class="btn-nav" type="is-info" tag="router-link" to="/">
-              <i class="far fa-clock"></i> <br />60 minutes</b-button
+              <i class="far fa-clock"></i> <br />60 <br>minutes</b-button
             >
           </div>
           <div class="column has-text-centered">
@@ -54,7 +54,7 @@
               to="/heure"
             >
               <i class="fas fa-hourglass-half"></i> <br />
-              48 heures</b-button
+              48 <br>heures</b-button
             >
           </div>
           <div class="column has-text-centered">
@@ -65,7 +65,7 @@
               to="/jour"
             >
               <i class="far fa-calendar-alt"></i> <br />
-              8 jours</b-button
+              8 <br>jours</b-button
             >
           </div>
         </nav>
@@ -123,19 +123,6 @@ export default {
       } catch (err) {
         this.$store.dispatch("getError", err);
       }
-    },
-    alertCustomError() {
-      this.$buefy.dialog.alert({
-        title: "Error",
-        message:
-          "Something's not good but I have a custom <b>icon</b> and <b>type</b>",
-        type: "is-danger",
-        hasIcon: true,
-        icon: "times-circle",
-        iconPack: "fa",
-        ariaRole: "alertdialog",
-        ariaModal: true
-      });
     }
   },
   computed: {
