@@ -203,12 +203,43 @@ export default {
   data() {
     return {
       lineOptions: {
-         maintainAspectRatio: false,
+        maintainAspectRatio: false,
         scales: {
           yAxes: [
             {
+              id: "precipitation",
+              type: "linear",
+              position: "left",
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                fontColor: "#3273DC",
+                callback: function(value) {
+                  return value + " mm";
+                }
+              }
+            },
+            {
+              id: "probabilite",
+              type: "linear",
+              position: "right",
+              ticks: {
+                max: 100,
+                min: 0,
+                fontColor: "#ffb733",
+                callback: function(value) {
+                  return value + " %";
+                }
+              }
+            },
+            {
+              id: "temperature",
+              type: "linear",
+              position: "left",
+              ticks: {
+                fontColor: "#FFFFF",
+                callback: function(value) {
+                  return value + " °C";
+                }
               }
             }
           ]
@@ -216,6 +247,9 @@ export default {
         elements: {
           line: {
             fill: true
+          },
+          point: {
+            radius: 0
           }
         }
       },

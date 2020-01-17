@@ -16,7 +16,7 @@
         ref="table"
         :opened-detailed="this.defaultOpenedDetails"
         detailed
-        detail-key="day"
+        detail-key="time"
         :show-detail-icon="true"
         :striped="true"
       >
@@ -58,7 +58,7 @@
                 style="margin-right: 5px"
               >
               </b-icon>
-              {{ props.row.temperatureLow }} °C
+              {{ props.row.temperatureMin }} °C
               / 
               <b-icon
                 pack="fas"
@@ -67,7 +67,7 @@
                 style="margin-right: 5px"
               >
               </b-icon>
-              {{ props.row.temperatureHigh }} °C
+              {{ props.row.temperatureMax }} °C
               </b-tag
             >
           </b-table-column>
@@ -82,23 +82,60 @@
         <template slot="detail" slot-scope="props">
           <article class="detailHourly">
             <div class="content">
+              <!-- SOLEIL -->
+              <b-field grouped group-multiline>
+                <div class="control">
+                  <b-taglist attached>
+                    <b-tag type="is-dark" size="is-medium">Levée du soleil à </b-tag>
+                    <b-tag type="is-info" size="is-medium"
+                      > {{moment.unix(props.row.sunriseTime).format("HH:mm")}}</b-tag
+                    >
+                  </b-taglist>
+                </div>
+                <div class="control">
+                  <b-taglist attached>
+                    <b-tag type="is-dark" size="is-medium">Couchée du soleil à </b-tag>
+                    <b-tag type="is-info" size="is-medium"
+                      > {{moment.unix(props.row.sunsetTime).format("HH:mm")}}</b-tag
+                    >
+                  </b-taglist>
+                </div>
+              </b-field>
               <!-- TEMPERATURE -->
               <b-field grouped group-multiline>
                 <div class="control">
                   <b-taglist attached>
-                    <b-tag type="is-dark" size="is-medium">Température</b-tag>
+                    <b-tag type="is-dark" size="is-medium">Température la plus basse</b-tag>
                     <b-tag type="is-info" size="is-medium"
-                      >{{ props.row.temperature }} °C</b-tag
+                      >{{ props.row.temperatureMin }} °C à {{moment.unix(props.row.temperatureMinTime).format("HH:mm")}}</b-tag
                     >
                   </b-taglist>
                 </div>
                 <div class="control">
                   <b-taglist attached>
                     <b-tag type="is-dark" size="is-medium"
-                      >Température ressentie</b-tag
+                      >Température ressentie la plus basse</b-tag
                     >
                     <b-tag type="is-info" size="is-medium"
-                      >{{ props.row.apparentTemperature }} °C</b-tag
+                      >{{ props.row.apparentTemperatureMin }} °C à {{moment.unix(props.row.apparentTemperatureMinTime).format("HH:mm")}} </b-tag
+                    >
+                  </b-taglist>
+                </div>
+                <div class="control">
+                  <b-taglist attached>
+                    <b-tag type="is-dark" size="is-medium">Température la plus haute</b-tag>
+                    <b-tag type="is-info" size="is-medium"
+                      >{{ props.row.temperatureMax }} °C à {{moment.unix(props.row.temperatureMaxTime).format("HH:mm")}}</b-tag
+                    >
+                  </b-taglist>
+                </div>
+                <div class="control">
+                  <b-taglist attached>
+                    <b-tag type="is-dark" size="is-medium"
+                      >Température ressentie la plus haute</b-tag
+                    >
+                    <b-tag type="is-info" size="is-medium"
+                      >{{ props.row.apparentTemperatureHigh }} °C à {{moment.unix(props.row.apparentTemperatureHighTime).format("HH:mm")}} </b-tag
                     >
                   </b-taglist>
                 </div>
@@ -219,8 +256,28 @@ export default {
         scales: {
           yAxes: [
             {
+              id: "precipitation",
+              type: "linear",
+              position: "left",
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                fontColor: "#3273DC",
+                callback: function(value) {
+                  return value + " mm";
+                }
+              }
+            },
+            {
+              id: "probabilite",
+              type: "linear",
+              position: "right",
+              ticks: {
+                max: 100,
+                min: 0,
+                fontColor: "#ffb733",
+                callback: function(value) {
+                  return value + " %";
+                }
               }
             }
           ]

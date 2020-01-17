@@ -28,13 +28,33 @@ export default {
   data() {
     return {
       lineOptions: {
-      responsive: true,
-      maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           yAxes: [
             {
+              id: "precipitation",
+              type: "linear",
+              position: "left",
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                fontColor: "#3273DC",
+                callback: function(value) {
+                  return value + " mm";
+                }
+              }
+            },
+            {
+              id: "probabilite",
+              type: "linear",
+              position: "right",
+              ticks: {
+                max: 100,
+                min: 0,
+                fontColor: "#ffb733",
+                callback: function(value) {
+                  return value + " %";
+                }
               }
             }
           ]

@@ -34,7 +34,7 @@ export default new Vuex.Store({
         dataArr.forEach(el => {
           timeLabels.push(moment.unix(el.time).format("HH:mm"));
           precipitation.push(el.precipIntensity);
-          precipitationProbality.push(el.precipProbability);
+          precipitationProbality.push(el.precipProbability * 100);
         });
       }
       let chartData = {
@@ -43,7 +43,14 @@ export default new Vuex.Store({
           {
             label: "Précipitation en milimétre",
             backgroundColor: "#3273DC",
+            yAxisID: 'precipitation',
             data: precipitation
+          },
+          {
+            label: "Probabilité de précipitation",
+            backgroundColor: "#ffb733",
+            yAxisID: 'probabilite',
+            data: precipitationProbality
           }
         ]
       };
@@ -57,13 +64,15 @@ export default new Vuex.Store({
     hourly_chart_data: state => {
       let timeLabels = [],
         precipitation = [],
-        precipitationProbality = [];
+        precipitationProbality = [],
+        temperature = [];
       const dataArr = state.weather_data.data.hourly.data;
       if (dataArr) {
         dataArr.forEach(el => {
           timeLabels.push(moment.unix(el.time).format("HH:mm"));
           precipitation.push(el.precipIntensity);
-          precipitationProbality.push(el.precipProbability);
+          precipitationProbality.push(el.precipProbability * 100);
+          temperature.push(el.temperature)
         });
       }
       let chartData = {
@@ -72,7 +81,20 @@ export default new Vuex.Store({
           {
             label: "Précipitation en milimétre",
             backgroundColor: "#3273DC",
+            yAxisID: 'precipitation',
             data: precipitation
+          },
+          {
+            label: "Probabilité de précipitation",
+            backgroundColor: "#ffb733",
+            yAxisID: 'probabilite',
+            data: precipitationProbality
+          },
+          {
+            label: "Température en °C",
+            yAxisID: 'temperature',
+            backgroundColor: "#E1ECFF",
+            data: temperature
           }
         ]
       };
@@ -91,7 +113,7 @@ export default new Vuex.Store({
         dataArr.forEach(el => {
           timeLabels.push(moment.unix(el.time).format("DD/MM"));
           precipitation.push(el.precipIntensity);
-          precipitationProbality.push(el.precipProbability);
+          precipitationProbality.push(el.precipProbability * 100);
         });
       }
       let chartData = {
@@ -100,7 +122,14 @@ export default new Vuex.Store({
           {
             label: "Précipitation en milimétre",
             backgroundColor: "#3273DC",
+            yAxisID: 'precipitation',
             data: precipitation
+          },
+          {
+            label: "Probabilité de précipitation",
+            backgroundColor: "#ffb733",
+            yAxisID: 'probabilite',
+            data: precipitationProbality
           }
         ]
       };
