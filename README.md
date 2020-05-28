@@ -11,7 +11,7 @@ Création de graphisme avec chartJs
 
 
 <p float="left">
-<img src="https://github.com/Maxime-Beaufils/demain-il-pleut/blob/master/screen/ce1.jpg" width="600">
+<img src="https://github.com/Maxime-Beaufils/demain-il-pleut/blob/master/screen/ce1.png" width="600">
 </p>
 
 ## Project setup
