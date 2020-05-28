@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.7db63f310fc54c30810f0bbe49dd9ca4.js"
+  "/demain-il-pleut/precache-manifest.18ca07f6ae12277b2bb9ad247913432b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "demain-il-pleut"});

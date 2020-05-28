@@ -1,4 +1,17 @@
-# demain-il-pleut
+# demain-il-pleut (WIP)
+
+Projet de veille technique : 
+Dashboard de prévision météo 
+
+## Projet vue.js
+Gestion des states avec VueX.  
+Gestion des routes avec Vue-router.  
+Fetch data depuis une API externe (DarSky) avec Axios.
+
+
+<p float="left">
+<img src="https://github.com/Maxime-Beaufils/demain-il-pleut/blob/master/screen/ce1.jpg" width="600">
+</p>
 
 ## Project setup
 ```
