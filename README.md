@@ -7,8 +7,7 @@ Dashboard de prévision météo
 Gestion des states avec VueX.  
 Gestion des routes avec Vue-router.  
 Fetch data depuis une API externe (DarSky) avec Axios.
-Création de graphisme avec chartJs 
-
+Création de graphisme avec chartJs.
 
 <p float="left">
 <img src="https://github.com/Maxime-Beaufils/demain-il-pleut/blob/master/screen/ce1.png" width="600">
